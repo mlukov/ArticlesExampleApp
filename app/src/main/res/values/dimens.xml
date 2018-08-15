@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="article_header_text_size">18sp</dimen>
+    <dimen name="article_min_text_size">12sp</dimen>
+    <dimen name="article_list_item_margin">10dp</dimen>
+    <dimen name="list_empty_text_size">16sp</dimen>
+</resources>
