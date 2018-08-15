@@ -1,8 +1,4 @@
-# users_example_app
+# ArticlesExampleApp
 
-Example android application for loading list of users from remote api and displaying their names in a List (RecyclerView). 
-
-Technologies: Retrofit, RxJava, Dagger, Mockito( Unit Test ).
-Design patterns: MVP, Abstract Factory, Dependency Injection, Repository.
-
-Unit tests for the Presenter.
+Example android application for loading list of articles from remote api, displaying them in a List (RecyclerView). 
+When article is tapped, details for article are displayed in new screen.
