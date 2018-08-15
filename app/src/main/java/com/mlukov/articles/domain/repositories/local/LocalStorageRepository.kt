@@ -48,7 +48,7 @@ constructor(private val cacheFolder : File, private val gson : Gson) : ILocalSto
                 if (repositories == null) {
                     emitter.onSuccess(ArticleDataList.empty())
                 } else {
-                    emitter.onSuccess(repositories!!)
+                    emitter.onSuccess(repositories)
                 }
             }
         }
@@ -134,7 +134,7 @@ constructor(private val cacheFolder : File, private val gson : Gson) : ILocalSto
             if (file.exists()) {
 
                 inputStream = FileInputStream(file)
-                val size = inputStream!!.available()
+                val size = inputStream.available()
                 val buffer = ByteArray(size)
                 inputStream.read(buffer)
                 inputStream.close()

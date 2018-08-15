@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         android:name=".ArticlesApp">
 
-        <activity android:name=".presentation.articles.list.view.MainActivity"
+        <activity android:name=".presentation.main.MainActivity"
                   android:configChanges="orientation|screenSize"
                   android:launchMode="singleTask">
             <intent-filter>
