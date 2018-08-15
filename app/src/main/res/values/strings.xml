@@ -3,4 +3,7 @@
     <string name="internet_connection_offline">The Internet connection appears to be offline.</string>
     <string name="oops_went_wrong_try">Oops, something went wrong. Sometimes these things happen, please try again.</string>
     <string name="list_is_empty">List is empty</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

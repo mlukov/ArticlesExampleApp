@@ -1,10 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.example.users"
+        applicationId "com.mlukov.articles"
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
@@ -27,11 +29,14 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
+    implementation 'com.android.support:support-v4:27.1.1'
     testImplementation 'junit:junit:4.12'
     testImplementation "org.mockito:mockito-core:2.+"
 
@@ -44,11 +49,15 @@ dependencies {
     //Dagger2 Core
     implementation "com.google.dagger:dagger:$rootProject.ext.daggerVer"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVer"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVer"
     //Dagger2 Android
     implementation "com.google.dagger:dagger-android-support:$rootProject.ext.daggerVer"
     annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.ext.daggerVer"
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.ext.daggerVer"
+
 }
 repositories {
     mavenCentral()
 }
+
+apply plugin: 'kotlin-android-extensions'
