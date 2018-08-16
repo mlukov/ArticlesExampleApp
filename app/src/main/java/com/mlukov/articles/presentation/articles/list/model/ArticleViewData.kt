@@ -1,8 +1,10 @@
 package com.mlukov.articles.presentation.articles.list.model
 
 import java.util.Date
+import java.io.Serializable
 
-data class ArticleViewData( val id :Int?,
+open class ArticleViewData( val id :Int?,
                        val title: String?,
                        val subtitle: String?,
-                       val date: Date? )
+                       val date: Date? ): Serializable {
+}

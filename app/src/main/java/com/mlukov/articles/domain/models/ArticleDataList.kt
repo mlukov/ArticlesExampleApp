@@ -6,14 +6,14 @@ import java.io.Serializable
 class ArticleDataList: Serializable {
 
     @SerializedName("articles")
-    var articles: List<ArticleData>? = null
+    var articles: MutableList<ArticleData>? = null
 
     companion object {
 
         fun empty() : ArticleDataList {
 
             val emptyData = ArticleDataList()
-            emptyData.articles = emptyList<ArticleData>()
+            emptyData.articles = mutableListOf<ArticleData>()
             return emptyData
         }
     }

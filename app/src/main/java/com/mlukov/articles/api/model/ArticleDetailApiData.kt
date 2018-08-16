@@ -1,8 +1,6 @@
 package com.mlukov.articles.api.model
 
-import java.util.*
+class ArticleDetailApiData {
 
-class ArticleDetailApiData : ArticleApiData(){
-
-    val body: String? = null
+    var item: ArticleDetailItemApiData? = null
 }

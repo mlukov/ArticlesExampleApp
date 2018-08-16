@@ -1,9 +1,9 @@
-<ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   xmlns:tools="http://schemas.android.com/tools"
                   xmlns:app="http://schemas.android.com/apk/res-auto"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
-                  tools:context="com.mlukov.articles.presentation.articles.list.view.ArticlesFragment">
+                  tools:context="com.mlukov.articles.presentation.articles.list.view.ArticlesListFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/listSwipeRefreshLayout"
@@ -33,4 +33,4 @@
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone"/>
 
-</ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

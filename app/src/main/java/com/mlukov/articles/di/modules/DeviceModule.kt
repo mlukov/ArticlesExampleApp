@@ -7,14 +7,15 @@ import com.mlukov.articles.presentation.providers.NetworkInfoProvider
 import com.mlukov.articles.presentation.providers.ResourceProvider
 import dagger.Module
 import dagger.Provides
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Module
-class DeviceModule ( val context : Context ){
+class DeviceModule( val context : Context ){
 
     @Provides
     @Singleton
-    fun providesNetworkInfoProvider() :INetworkInfoProvider{
+    fun providesNetworkInfoProvider() : INetworkInfoProvider{
 
         return NetworkInfoProvider( context )
     }

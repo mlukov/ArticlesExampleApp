@@ -1,6 +1,7 @@
 package com.mlukov.articles.presentation.articles.list.view
 
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -15,46 +16,46 @@ import android.widget.Toast
 import com.mlukov.articles.R
 import com.mlukov.articles.presentation.articles.list.model.ArticleListViewModel
 import com.mlukov.articles.presentation.articles.list.model.ArticleViewData
-import com.mlukov.articles.presentation.articles.list.presenter.IArticlesPresenter
+import com.mlukov.articles.presentation.articles.list.presenter.IArticlesListPresenter
+import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
-class ArticlesFragment : Fragment(), IArticlesListView {
+class ArticlesListFragment : Fragment(), IArticlesListView {
 
     companion object {
 
-        public val TAG = ArticlesFragment::class.simpleName
+        val TAG = ArticlesListFragment::class.java.simpleName
 
-        public fun newInstance(): ArticlesFragment{
-            return ArticlesFragment()
+        fun newInstance(): ArticlesListFragment{
+            return ArticlesListFragment()
         }
     }
-
 
     private var listRecyclerView: RecyclerView? = null
     private var listSwipeRefreshLayout: SwipeRefreshLayout? = null
     private var emptyListText: TextView? = null
 
-    private var listAdapter: ArticlesAdapter? = null
-    private val dataList = mutableListOf<ArticleViewData>()
+    @Inject
+    lateinit var listAdapter: ArticlesAdapter
 
     @Inject
-    var presenter: IArticlesPresenter? = null
+    lateinit var listPresenter: IArticlesListPresenter
 
-    override fun onCreate(savedInstanceState : Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onAttach(context: Context) {
 
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreateView(inflater : LayoutInflater, container : ViewGroup?,
                               savedInstanceState : Bundle?) : View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_articles, container, false)
+
+        val view = inflater.inflate(R.layout.fragment_articles_list, container, false)
 
         listRecyclerView = view.findViewById(R.id.listRecyclerView)
         listSwipeRefreshLayout = view.findViewById(R.id.listSwipeRefreshLayout)
         emptyListText = view.findViewById(R.id.emptyListText)
 
-        listAdapter = ArticlesAdapter(dataList)
         listRecyclerView?.setLayoutManager(LinearLayoutManager(activity, RecyclerView.VERTICAL, false))
         listRecyclerView?.setAdapter(listAdapter)
 
@@ -63,42 +64,34 @@ class ArticlesFragment : Fragment(), IArticlesListView {
         listSwipeRefreshLayout?.setColorSchemeResources(android.R.color.holo_orange_dark)
         listSwipeRefreshLayout?.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
 
-            presenter?.loadArticles(true)
+            listPresenter.loadArticles(true)
         })
 
         return view
     }
 
-
     override fun onResume() {
+
         super.onResume()
-        presenter?.loadArticles( false )
+        listPresenter.loadArticles( false )
 
     }
 
     override fun onPause() {
+
         super.onPause()
-        presenter?.dispose()
+        listPresenter.dispose()
     }
 
     //region IArticlesListView implementation
-    override fun loading(isLoading: Boolean) {
+    override fun onLoadingStateChange(isLoading: Boolean) {
 
         listSwipeRefreshLayout?.setRefreshing(isLoading)
     }
 
     override fun onArticlesLoaded(articleListViewModel: ArticleListViewModel) {
 
-        dataList.clear()
-
-        if (articleListViewModel == null) {
-
-            listAdapter?.notifyDataSetChanged()
-            return
-        }
-
-        dataList.addAll(articleListViewModel.articles)
-        listAdapter?.notifyDataSetChanged()
+        listAdapter?.updateList( articleListViewModel.articles )
 
         val listIsEmpty = articleListViewModel.articles.size == 0
         emptyListText?.setVisibility(if (listIsEmpty) View.VISIBLE else View.GONE)
@@ -107,9 +100,9 @@ class ArticlesFragment : Fragment(), IArticlesListView {
 
     override fun onError(errorMessage: String) {
 
-        dataList.clear()
         listAdapter?.notifyDataSetChanged()
-        emptyListText?.setVisibility(View.VISIBLE)
+
+        emptyListText?.setVisibility( if( listAdapter.itemCount == 0 ) View.VISIBLE else View.INVISIBLE )
 
         Toast.makeText(activity, errorMessage, Toast.LENGTH_LONG).show()
     }

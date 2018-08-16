@@ -1,8 +1,9 @@
 package com.mlukov.articles.domain.interactors
 
-import android.support.annotation.NonNull
 import com.mlukov.articles.api.model.ArticleApiData
 import com.mlukov.articles.api.model.ArticleDetailApiData
+import com.mlukov.articles.api.model.ArticleDetailItemApiData
+import com.mlukov.articles.api.model.ArticleListApi
 import com.mlukov.articles.domain.models.ArticleData
 import com.mlukov.articles.domain.models.ArticleDataList
 import com.mlukov.articles.domain.models.ArticleDetailData
@@ -17,12 +18,12 @@ import io.reactivex.functions.Predicate
 import java.util.ArrayList
 import javax.inject.Inject
 
-class ArticleInteractor
+open class ArticleInteractor
 @Inject constructor(val articlesApiRepository : IArticlesApiRepository,
                     val localStorageRepository : ILocalStorageRepository) : IArticleInteractor{
 
 
-    override fun getArticles() : Single<ArticleDataList> {
+    override fun getArticleList() : Single<ArticleDataList> {
 
         return loadArticleList().first( ArticleDataList.empty())
     }
@@ -48,24 +49,22 @@ class ArticleInteractor
         return localStorageRepository.getArticleDataListFromCache()
                 .concatWith(getArticleListFromServer())
                 .filter( Predicate<ArticleDataList> { articleDataList->
-                    (articleDataList?.articles?.isEmpty() ?: true == false )
+                    (articleDataList.articles?.isEmpty() ?: true == false )
                 })
     }
 
     private fun getArticleListFromServer() : Single<ArticleDataList> {
 
         return articlesApiRepository.getArticleList()
-                .flatMap(object : Function<List<ArticleApiData>, SingleSource<ArticleDataList>> {
+                .flatMap(object : Function<ArticleListApi, SingleSource<ArticleDataList>> {
                     @Throws(Exception::class)
-                    override fun apply( articleApiDataList : List<ArticleApiData>) : SingleSource<ArticleDataList> {
+                    override fun apply( articleApiDataList : ArticleListApi) : SingleSource<ArticleDataList> {
 
                         val list = ArrayList<ArticleData>()
-                        for (articleApiData in articleApiDataList) {
 
-                            if (articleApiData != null) {
+                        for (articleApiData in articleApiDataList.items ?: emptyList()) {
 
-                                list.add(createFrom(articleApiData))
-                            }
+                            list.add(createFrom(articleApiData))
                         }
                         val articleDataList = ArticleDataList()
                         articleDataList.articles = list
@@ -84,19 +83,19 @@ class ArticleInteractor
         return articleData
     }
 
-    private fun copyData( destination : ArticleData, source : ArticleApiData ) {
+    private fun copyData( destination : ArticleData, source : ArticleApiData? ) {
 
-        destination.id          = source.id
-        destination.title       = source.title
-        destination.subtitle    = source.subtitle
-        destination.date        = source.date
+        destination.id          = source?.id
+        destination.title       = source?.title
+        destination.subtitle    = source?.subtitle
+        destination.date        = source?.date
     }
 
-    private fun createDetailFrom( articleApiDetailData : ArticleDetailApiData ) : ArticleDetailData{
+    private fun createDetailFrom(articleApiDetailData : ArticleDetailApiData) : ArticleDetailData{
 
         val articleDetailData = ArticleDetailData()
-        copyData( articleDetailData, articleApiDetailData )
-        articleDetailData.body  = articleApiDetailData.body
+        copyData( articleDetailData, articleApiDetailData.item )
+        articleDetailData.body  = articleApiDetailData.item?.body
 
         return articleDetailData
     }

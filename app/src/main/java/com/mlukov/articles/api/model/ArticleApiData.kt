@@ -4,8 +4,8 @@ import java.util.*
 
 open class ArticleApiData {
 
-    val id: Int? = null
-    val title: String? = null
-    val subtitle: String? = null
-    val date: Date? = null
+    public var id: Int? = null
+    public var title: String? = null
+    public var subtitle: String? = null
+    public var date: Date? = null
 }

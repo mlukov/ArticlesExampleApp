@@ -16,12 +16,12 @@ import com.mlukov.articles.utils.ISchedulersProvider
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ArticlesPresenter @Inject
-constructor(private val articlesView : IArticlesListView,
-            private val articleInteractor : IArticleInteractor,
-            private val schedulersProvider : ISchedulersProvider,
-            private val resourceProvider : IResourceProvider,
-            private val networkInfoProvider : INetworkInfoProvider) : BasePresenter(), IArticlesPresenter {
+open class ArticlesListPresenter @Inject
+constructor( val articlesView : IArticlesListView,
+             val articleInteractor : IArticleInteractor,
+             val schedulersProvider : ISchedulersProvider,
+             val resourceProvider : IResourceProvider,
+             val networkInfoProvider : INetworkInfoProvider ) : BasePresenter(), IArticlesListPresenter {
 
 
     override fun loadArticles(  refresh: Boolean ) {
@@ -44,7 +44,7 @@ constructor(private val articlesView : IArticlesListView,
 
     private fun getArticleList() : Disposable{
 
-        return articleInteractor.getArticles().map {
+        return articleInteractor.getArticleList().map {
 
                 val articlesList = ArticleListViewModel()
 
@@ -62,7 +62,7 @@ constructor(private val articlesView : IArticlesListView,
                 .subscribe({
 
                     articlesView.onArticlesLoaded( it)
-                    articlesView.loading( false )
+                    articlesView.onLoadingStateChange( false )
                 },
                         {
 
@@ -75,7 +75,7 @@ constructor(private val articlesView : IArticlesListView,
 
         Log.e( TAG, throwable.message, throwable)
 
-        articlesView.loading( false )
+        articlesView.onLoadingStateChange( false )
 
         var resId =
                 if( !networkInfoProvider.isNetworkConnected )
@@ -97,6 +97,6 @@ constructor(private val articlesView : IArticlesListView,
 
     companion object {
 
-        private val TAG = ArticlesPresenter::class.simpleName
+        private val TAG = ArticlesListPresenter::class.simpleName
     }
 }

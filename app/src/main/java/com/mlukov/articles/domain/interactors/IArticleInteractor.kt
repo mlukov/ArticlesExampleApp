@@ -7,7 +7,7 @@ import io.reactivex.Single
 
 interface IArticleInteractor {
 
-    fun getArticles() : Single<ArticleDataList>
+    fun getArticleList() : Single<ArticleDataList>
 
     fun getArticleDetails( articleId: Int): Single<ArticleDetailData>
 

@@ -4,4 +4,14 @@
     <dimen name="article_min_text_size">12sp</dimen>
     <dimen name="article_list_item_margin">10dp</dimen>
     <dimen name="list_empty_text_size">16sp</dimen>
+
+    <dimen name="min_title_text_size">16sp</dimen>
+    <dimen name="max_title_text_size">44sp</dimen>
+
+    <dimen name="min_subtitle_text_size">14sp</dimen>
+    <dimen name="max_subtitle_text_size">34sp</dimen>
+
+    <dimen name="min_body_text_size">16sp</dimen>
+    <dimen name="max_body_text_size">24sp</dimen>
+
 </resources>

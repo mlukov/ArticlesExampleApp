@@ -10,7 +10,7 @@ import dagger.android.AndroidInjection
 
 import com.mlukov.articles.R
 
-class BaseActivity : AppCompatActivity() {
+open class BaseActivity : AppCompatActivity() {
 
 
     //region show screen

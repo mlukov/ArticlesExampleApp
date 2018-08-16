@@ -2,7 +2,7 @@ package com.mlukov.articles.presentation.articles.list.presenter
 
 import com.mlukov.articles.mvp.IBasePresenter
 
-interface IArticlesPresenter :IBasePresenter {
+interface IArticlesListPresenter :IBasePresenter {
 
     fun loadArticles( refresh: Boolean )
 }

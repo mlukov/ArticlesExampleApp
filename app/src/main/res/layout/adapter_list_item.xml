@@ -1,17 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
 
-    <TextView
-        android:id="@+id/articleTitleTextView"
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/titleListTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/article_header_text_size"
-        android:layout_margin="@dimen/article_list_item_margin"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="@dimen/article_min_text_size"
-        android:text="Article 1"
-        android:gravity="left"/>
+        android:padding="2dp"
+        android:layout_margin="3dp"
+        android:gravity="start"
+        android:minHeight="40dp"
+        app:autoSizeMaxTextSize="@dimen/max_title_text_size"
+        app:autoSizeMinTextSize="@dimen/min_title_text_size"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/full_names" />
 
-</RelativeLayout>
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/subtitleListTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:layout_margin="3dp"
+        android:gravity="start"
+        android:minHeight="30dp"
+        app:autoSizeMaxTextSize="@dimen/max_subtitle_text_size"
+        app:autoSizeMinTextSize="@dimen/min_subtitle_text_size"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleListTextView"
+        tools:text="@tools:sample/full_names" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/dateListTextView"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:gravity="right|center_vertical"
+        android:textSize="@dimen/min_body_text_size"
+        app:autoSizeMaxTextSize="@dimen/max_body_text_size"
+        app:autoSizeMinTextSize="@dimen/min_body_text_size"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subtitleListTextView"
+        tools:text="@tools:sample/date/ddmmyy" />
+
+</android.support.constraint.ConstraintLayout>
