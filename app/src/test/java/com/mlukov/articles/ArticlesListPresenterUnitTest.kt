@@ -28,8 +28,6 @@ import java.util.Date
 import io.reactivex.Single
 import io.reactivex.schedulers.TestScheduler
 
-import org.junit.Assert.assertEquals
-
 class ArticlesListPresenterUnitTest {
 
     @Mock
